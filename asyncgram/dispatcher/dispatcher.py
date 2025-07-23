@@ -1,5 +1,6 @@
 import requests
 
+from asyncgram.api.methods import ApiMethods
 from asyncgram.bot.bot import Bot
 from asyncgram.constants.urls import base_url
 from rich import print_json
@@ -20,10 +21,7 @@ class Dispatcher:
 
     def start_polling(self, bot: Bot):
         self.set_token(bot.token)
-        url = self.url + 'getUpdates'
-        # r = requests.post(url)
-        # result = r.json()['result']
-        # offset = result[-1].get('update_id', None) if result else None
+        url = self.url + ApiMethods.GET_UPDATES
         offset = None
         while True:
             data = {
@@ -32,7 +30,8 @@ class Dispatcher:
             }
             try:
                 r = requests.post(url, data=data)
-            except ConnectionResetError as e:
+            except Exception as e:
+                print(e)
                 print('////ABORTED/////')
                 continue
 
