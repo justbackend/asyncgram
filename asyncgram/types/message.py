@@ -8,5 +8,7 @@ from asyncgram.types.user import User
 
 class Message(BaseModel):
     message_id: int
+    message_thread_id: int
     from_user: Optional[User] = None
     sender_chat: Optional[Chat] = None
+
